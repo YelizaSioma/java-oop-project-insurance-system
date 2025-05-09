@@ -36,9 +36,9 @@ public class PaymentInstance implements Comparable<PaymentInstance>{
 
     @Override
     public int compareTo(PaymentInstance o) {
-        int cmp = this.getPaymentTime().compareTo(o.getPaymentTime());
-        if (cmp != 0) return cmp;
-        return Long.compare(this.id, o.id);
+        if (o == null) {
+            throw new NullPointerException("Cannot compare to null Payment Instance.");
+        }
+        return this.paymentTime.compareTo(o.paymentTime);
     }
-
 }

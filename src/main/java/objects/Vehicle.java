@@ -7,6 +7,10 @@ public class Vehicle {
 
     //constructor
     public Vehicle(String licensePlate, int originalValue){
+        //validation
+        validateVehicleParams(licensePlate, originalValue);
+
+    //initialization
         this.licensePlate=licensePlate;
         this.originalValue=originalValue;
     }
@@ -18,5 +22,24 @@ public class Vehicle {
 
     public int getOriginalValue(){
         return originalValue;
+    }
+
+    //additional validation helper method
+    private void validateVehicleParams(String licensePlate, int originalValue) {
+        if(licensePlate == null){
+            throw new IllegalArgumentException("License plate cannot be null");
+        }
+        if(licensePlate.length()!=7){
+            throw new IllegalArgumentException("License plate must be 7 characters in length");
+        }
+        // every char must be A–Z or 0–9
+        for (char c : licensePlate.toCharArray()) {
+            if (!( (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') )) {
+                throw new IllegalArgumentException("License plate must contain only uppercase A–Z or digits 0–9");
+            }
+        }
+        if(originalValue <= 0){
+            throw new IllegalArgumentException("Original value must be positive number");
+        }
     }
 }
