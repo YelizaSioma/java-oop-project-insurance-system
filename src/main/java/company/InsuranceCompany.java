@@ -51,21 +51,7 @@ public class InsuranceCompany {
                                                PremiumPaymentFrequency proposedPaymentFrequency,
                                                Vehicle vehicleToInsure){
         //parameters validations
-        if (policyHolder == null) {
-            throw new IllegalArgumentException("Policy holder cannot be null");
-        }
-
-        if (proposedPremium <= 0) {
-            throw new IllegalArgumentException("Proposed premium must be positive");
-        }
-
-        if (proposedPaymentFrequency == null) {
-            throw new IllegalArgumentException("Premium payment frequency cannot be null");
-        }
-
-        if (vehicleToInsure == null) {
-            throw new IllegalArgumentException("Vehicle to insure cannot be null");
-        }
+        validateInsureVehicleParams(policyHolder, proposedPremium, proposedPaymentFrequency, vehicleToInsure);
 
         //other business validations
         //unique contract number check
@@ -282,6 +268,27 @@ public class InsuranceCompany {
 
 
     //___________Private helpers___________
+    private void validateInsureVehicleParams(Person policyHolder,
+                                             int proposedPremium,
+                                             PremiumPaymentFrequency proposedPaymentFrequency,
+                                             Vehicle vehicleToInsure){
+        if (policyHolder == null) {
+            throw new IllegalArgumentException("Policy holder cannot be null");
+        }
+
+        if (proposedPremium <= 0) {
+            throw new IllegalArgumentException("Proposed premium must be positive");
+        }
+
+        if (proposedPaymentFrequency == null) {
+            throw new IllegalArgumentException("Premium payment frequency cannot be null");
+        }
+
+        if (vehicleToInsure == null) {
+            throw new IllegalArgumentException("Vehicle to insure cannot be null");
+        }
+    }
+
     private void validateCurrentTime(LocalDateTime currentTime){
         if (currentTime == null) {
             throw new IllegalArgumentException("Current time cannot be null in Insurance Company");

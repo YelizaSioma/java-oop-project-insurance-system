@@ -338,6 +338,4 @@ public class RequiredTests {
                 insuranceCompany.insureVehicle("c1", null, legalPerson1, 184, PremiumPaymentFrequency.MONTHLY,     new Vehicle("BANAN22", 22_000));
         });
     }
-
-
 }

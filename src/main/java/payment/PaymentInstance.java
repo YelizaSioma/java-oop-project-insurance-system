@@ -35,7 +35,7 @@ public class PaymentInstance implements Comparable<PaymentInstance>{
     }
 
     //___________Private helpers___________
-    private static void validateConstructorParams(LocalDateTime paymentTime, int paymentAmount) {
+    private void validateConstructorParams(LocalDateTime paymentTime, int paymentAmount) {
         if (paymentTime == null) {
             throw new IllegalArgumentException("Payment time must be set up in the Payment Instance.");
         }

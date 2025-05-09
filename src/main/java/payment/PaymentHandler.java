@@ -15,8 +15,8 @@ public class PaymentHandler {
     private final InsuranceCompany insurer;
 
     /**
-     *
-     * @param insurer   non-null
+     * @param insurer the company whose contracts are handled; must not be null
+     * @throws IllegalArgumentException if insurer is null
      */
     //constructor
     public PaymentHandler(InsuranceCompany insurer){
@@ -32,6 +32,7 @@ public class PaymentHandler {
     public Map<AbstractContract, Set<PaymentInstance>> getPaymentHistory(){
         return paymentHistory;
     }
+
 
     public void pay(MasterVehicleContract contract, int amount){
 
@@ -87,6 +88,7 @@ public class PaymentHandler {
             getPaymentHistory().get(contract).add(paymentInstance);
         }
     }
+
 
     public void pay(AbstractContract contract, int amount){
 
