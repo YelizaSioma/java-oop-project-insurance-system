@@ -92,26 +92,7 @@ public abstract class AbstractContract{
     }
 
     public void updateBalance(){
-        int paymentMultiplier = 1;
-
-        //set payment multiplier accordingly to the premiumPaymentFrequency
-        switch(contractPaymentData.getPremiumPaymentFrequency()) {
-            case ANNUAL:
-                break;
-            case SEMI_ANNUAL:
-                paymentMultiplier = 2;
-                break;
-            case QUARTERLY:
-                paymentMultiplier = 4;
-                break;
-            case MONTHLY:
-                paymentMultiplier = 12;
-                break;
-        }
-
-        if(insurer.getCurrentTime().isAfter(contractPaymentData.getNextPaymentTime())){
-            contractPaymentData.setOutstandingBalance(contractPaymentData.getOutstandingBalance() + contractPaymentData.getPremium()*paymentMultiplier);
-        }
+        insurer.chargePremiumOnContract(this);
     }
 
     //private helper validation method for best practice code

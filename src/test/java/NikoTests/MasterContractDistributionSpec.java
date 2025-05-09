@@ -1,4 +1,4 @@
-
+package NikoTests;
 
 import company.InsuranceCompany;
 import contracts.MasterVehicleContract;
@@ -53,7 +53,6 @@ public class MasterContractDistributionSpec {
 
         c4.getContractPaymentData().setPremium(20);
         c4.getContractPaymentData().setOutstandingBalance(0);
-        c4.setInactive();  // contract4 is inactive per spec
 
         // Build master
         master = ic.createMasterVehicleContract("m1", null, legal);
@@ -61,7 +60,7 @@ public class MasterContractDistributionSpec {
         master.requestAdditionOfChildContract(c2);
         master.requestAdditionOfChildContract(c3);
         master.requestAdditionOfChildContract(c4);
-
+        c4.setInactive();  // contract4 is inactive per spec
         // Make sure the master is tracked at top level too
         ic.getContracts().add(master);
     }

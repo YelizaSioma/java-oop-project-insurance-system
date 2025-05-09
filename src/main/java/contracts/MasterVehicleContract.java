@@ -59,6 +59,11 @@ public class MasterVehicleContract extends AbstractVehicleContract{
         insurer.getHandler().pay(this, amount);
     }
 
+    @Override
+    public void updateBalance() {
+        insurer.chargePremiumOnContract(this);
+    }
+
     //methods
     public Set<SingleVehicleContract> getChildContracts() {
         return childContracts;

@@ -52,7 +52,7 @@ public class PaymentHandler {
     public void pay(MasterVehicleContract contract, int amount){
         validateMasterVehicleContractAndAmount(contract,amount);
         if (!contract.isActive()){
-            throw new InvalidContractException("Contract mu be active to make the payment.");
+            throw new InvalidContractException("Contract must be active to make the payment.");
         }
         if(this.insurer.getHandler() != contract.getInsurer().getHandler()){
             throw new InvalidContractException("The handler must be set up to make the payment.");
