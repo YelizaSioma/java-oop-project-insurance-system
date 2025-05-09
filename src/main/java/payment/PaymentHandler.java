@@ -115,7 +115,7 @@ public class PaymentHandler {
     public void pay(AbstractContract contract, int amount){
         validateAbstractContractAndAmount(contract,amount);
         if (!contract.isActive()){
-            throw new InvalidContractException("Contract mu be active to make the payment.");
+            throw new InvalidContractException("Contract must be active to make the payment.");
         }
         if(this.insurer.getHandler() != contract.getInsurer().getHandler()){
             throw new InvalidContractException("Handler differ from the expected one.");

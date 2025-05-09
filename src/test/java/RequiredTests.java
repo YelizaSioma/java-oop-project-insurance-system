@@ -329,4 +329,15 @@ public class RequiredTests {
         assertEquals(400, paymentInstance.getPaymentAmount());
         assertTrue(paymentInstance.getPaymentTime().isEqual(insuranceCompany.getCurrentTime()));
     }
+
+    @Test
+    public void testAbstractContractUniqueNumber(){
+        SingleVehicleContract c1 = insuranceCompany.insureVehicle("c1", null, legalPerson1, 1500, PremiumPaymentFrequency.ANNUAL,     new Vehicle("AA111AA", 15_000));
+
+        assertThrows(IllegalArgumentException.class, () -> {
+                insuranceCompany.insureVehicle("c1", null, legalPerson1, 184, PremiumPaymentFrequency.MONTHLY,     new Vehicle("BANAN22", 22_000));
+        });
+    }
+
+
 }

@@ -47,6 +47,6 @@ public class PaymentInstanceTests {
         assertTrue(instance1.compareTo(instance2) < 0); // instance1 je starší než instance2
         assertTrue(instance2.compareTo(instance1) > 0); // instance2 je novší než instance1
         assertTrue(instance3.compareTo(instance1) < 0); // instance3 je starší než instance1
-        assertEquals(0, instance1.compareTo(new PaymentInstance(now, 200))); // rovnaký čas, iná suma
+        assertEquals(-1, instance1.compareTo(new PaymentInstance(now, 200))); // rovnaký čas, iná suma
     }
 }

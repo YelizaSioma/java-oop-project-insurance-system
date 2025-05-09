@@ -7,7 +7,7 @@ import payment.ContractPaymentData;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public abstract class AbstractContract {
+public abstract class AbstractContract{
     private final String contractNumber; //non-empty string not null. //Must be unique within the same insurer
     protected final InsuranceCompany insurer; //not null
     protected final Person policyHolder; //not null
@@ -35,10 +35,13 @@ public abstract class AbstractContract {
         //validation
         validateAbstractContractParams(contractNumber, insurer, policyHolder);
         validateCoverageAmount(coverageAmount);
-//        if(getInsurer().getContracts().contains(getContractNumber().equals(contractNumber)))
 
-            //assignment
+        //assignment
         this.contractNumber = contractNumber;
+        //unique contract number validation
+        if(insurer.getContracts().contains(this)){
+            throw new IllegalArgumentException("Contract Number must be unique inside one insurer.");
+        }
         this.insurer = insurer;
         this.policyHolder = policyHolder;
         this.contractPaymentData = contractPaymentData;
@@ -136,5 +139,12 @@ public abstract class AbstractContract {
         if (coverageAmount < 0) {
             throw new IllegalArgumentException("Coverage amount cannot be negative");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractContract contract = (AbstractContract) o;
+        return this.getContractNumber().equals(contract.getContractNumber());
     }
 }
