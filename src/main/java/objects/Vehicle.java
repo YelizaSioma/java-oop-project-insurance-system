@@ -15,7 +15,7 @@ public class Vehicle {
         this.originalValue=originalValue;
     }
 
-    //methods
+    //___________Public methods___________
     public String getLicensePlate(){
         return licensePlate;
     }
@@ -24,7 +24,7 @@ public class Vehicle {
         return originalValue;
     }
 
-    //additional validation helper method
+    //___________Private helpers___________
     private void validateVehicleParams(String licensePlate, int originalValue) {
         if(licensePlate == null){
             throw new IllegalArgumentException("License plate cannot be null");

@@ -27,20 +27,8 @@ public class ContractPaymentData {
         this.outstandingBalance=outstandingBalance;
     }
 
-    //helper validation methods
-    private void validatePremium(int premium){
-        if (premium <= 0) {
-            throw new IllegalArgumentException("Premium value can't be null in ContractPaymentData.");
-        }
-    }
 
-    private void validatePremiumPaymentFrequency(PremiumPaymentFrequency premiumPaymentFrequency){
-        if (premiumPaymentFrequency == null) {
-            throw new IllegalArgumentException("Invalid payment frequency.");
-        }
-    }
-
-    //methods
+    //___________Public methods___________
     public int getPremium(){
         return premium;
     }
@@ -90,4 +78,17 @@ public class ContractPaymentData {
         }
     }
 
+
+    //___________Private helpers___________
+    private void validatePremium(int premium){
+        if (premium <= 0) {
+            throw new IllegalArgumentException("Premium value can't be null in ContractPaymentData.");
+        }
+    }
+
+    private void validatePremiumPaymentFrequency(PremiumPaymentFrequency premiumPaymentFrequency){
+        if (premiumPaymentFrequency == null) {
+            throw new IllegalArgumentException("Invalid payment frequency.");
+        }
+    }
 }

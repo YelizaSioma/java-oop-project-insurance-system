@@ -27,6 +27,7 @@ public abstract class AbstractVehicleContract extends AbstractContract {
         this.beneficiary=beneficiary;
     }
 
+    //___________Public methods___________
     /**
      * @param beneficiary may be null, if non‐null, must not equal the current policyHolder
      * @throws IllegalArgumentException if beneficiary equals policyHolder
@@ -40,7 +41,9 @@ public abstract class AbstractVehicleContract extends AbstractContract {
         return beneficiary;
     }
 
-    //private helper validation method for best practice code to avoid override subclass methods errors
+
+    //___________Private helpers___________
+    //private helper validation method for best practice code
     private void validateBeneficiary(Person beneficiary){
         if (beneficiary != null && beneficiary.equals(getPolicyHolder())){
             throw new IllegalArgumentException("Beneficiary cannot be policy holder at the same time.");

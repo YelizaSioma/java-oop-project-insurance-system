@@ -39,12 +39,13 @@ public class TravelContract extends AbstractContract {
         this.insuredPersons = new HashSet<>(personsToInsure);
     }
 
-    //methods
+    //___________Public methods___________
     public Set<Person> getInsuredPersons(){
         return insuredPersons;
     }
 
-    //helper validation methods
+
+    //___________Private helpers___________
     /**
      * @throws IllegalArgumentException if contractPaymentData is null,
      *                                  or personsToInsure is null or empty

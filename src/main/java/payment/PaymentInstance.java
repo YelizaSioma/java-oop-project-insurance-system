@@ -25,7 +25,7 @@ public class PaymentInstance implements Comparable<PaymentInstance>{
         this.id = NEXT_ID++;
     }
 
-    //methods
+    //___________Public methods___________
     public LocalDateTime getPaymentTime(){
         return paymentTime;
     }
@@ -34,6 +34,11 @@ public class PaymentInstance implements Comparable<PaymentInstance>{
         return paymentAmount;
     }
 
+    //___________Private helpers___________
+    //add
+
+
+    //___________Override methods___________
     @Override
     public int compareTo(PaymentInstance o) {
         int cmp = this.getPaymentTime().compareTo(o.getPaymentTime());

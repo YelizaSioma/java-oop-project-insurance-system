@@ -25,26 +25,8 @@ public class PaymentHandler {
         this.insurer=insurer;
     }
 
-    //additional validation helper methods
-    private void validateMasterVehicleContractAndAmount(MasterVehicleContract contract, int amount){
-        if (contract == null) {
-            throw new IllegalArgumentException("Master Vehicle Contract cannot be null in pay process.");
-        }
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount to pay cannot be null in pay process.");
-        }
-    }
 
-    private void validateAbstractContractAndAmount(AbstractContract contract, int amount){
-        if (contract == null) {
-            throw new IllegalArgumentException("Contract cannot be null in pay process.");
-        }
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount to pay cannot be null in pay process.");
-        }
-    }
-
-    //methods
+    //___________Public methods___________
     public Map<AbstractContract, Set<PaymentInstance>> getPaymentHistory(){
         return paymentHistory;
     }
@@ -129,6 +111,25 @@ public class PaymentHandler {
         } else {
             getPaymentHistory().put(contract, new TreeSet<>());
             getPaymentHistory().get(contract).add(paymentInstance);
+        }
+    }
+
+    //___________Private helpers___________
+    private void validateMasterVehicleContractAndAmount(MasterVehicleContract contract, int amount){
+        if (contract == null) {
+            throw new IllegalArgumentException("Master Vehicle Contract cannot be null in pay process.");
+        }
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount to pay cannot be null in pay process.");
+        }
+    }
+
+    private void validateAbstractContractAndAmount(AbstractContract contract, int amount){
+        if (contract == null) {
+            throw new IllegalArgumentException("Contract cannot be null in pay process.");
+        }
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Amount to pay cannot be null in pay process.");
         }
     }
 }

@@ -35,12 +35,13 @@ public class SingleVehicleContract extends AbstractVehicleContract{
         this.insuredVehicle=vehicleToInsure;
     }
 
-    //methods
+    //___________Public methods___________
     public Vehicle getInsuredVehicle(){
         return insuredVehicle;
     }
 
-    //helper validation method
+
+    //___________Private helpers___________
     /**
      * Validates params for a SingleVehicleContract.
      *

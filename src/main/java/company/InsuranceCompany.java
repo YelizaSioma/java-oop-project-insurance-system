@@ -26,23 +26,7 @@ public class InsuranceCompany {
         this.handler = new PaymentHandler(this);
     }
 
-    //additional validation methods
-    private void validateCurrentTime(LocalDateTime currentTime){
-        if (currentTime == null) {
-            throw new IllegalArgumentException("Current time cannot be null in Insurance Company");
-        }
-    }
-
-    private void validateContractNumber(String contractNumber){
-        //unique contract number check
-        for (AbstractContract contract : contracts){
-            if(contract.getContractNumber().equals(contractNumber)){
-                throw new IllegalArgumentException("Contract number should be unique inside of the one Insurance Company");
-            }
-        }
-    }
-
-    //methods
+    //___________Public methods___________
     public LocalDateTime getCurrentTime(){
         return currentTime;
     }
@@ -293,6 +277,23 @@ public class InsuranceCompany {
 
         if(expectedDamages >= (0.7 * singleVehicleContract.getInsuredVehicle().getOriginalValue())){
             singleVehicleContract.setInactive();
+        }
+    }
+
+
+    //___________Private helpers___________
+    private void validateCurrentTime(LocalDateTime currentTime){
+        if (currentTime == null) {
+            throw new IllegalArgumentException("Current time cannot be null in Insurance Company");
+        }
+    }
+
+    private void validateContractNumber(String contractNumber){
+        //unique contract number check
+        for (AbstractContract contract : contracts){
+            if(contract.getContractNumber().equals(contractNumber)){
+                throw new IllegalArgumentException("Contract number should be unique inside of the one Insurance Company");
+            }
         }
     }
 }

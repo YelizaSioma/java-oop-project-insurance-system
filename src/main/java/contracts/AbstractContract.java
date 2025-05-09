@@ -7,6 +7,11 @@ import payment.ContractPaymentData;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+
+/**
+ * Base class for any insurance contract.
+ * Enforces non-null IDs, non-negative coverage, and unique numbers per insurer.
+ */
 public abstract class AbstractContract{
     private final String contractNumber; //non-empty string not null. //Must be unique within the same insurer
     protected final InsuranceCompany insurer; //not null
@@ -16,7 +21,7 @@ public abstract class AbstractContract{
     protected boolean isActive;
 
     /**
-     * @param contractNumber           non-null, non-empty, unique in Insurance Company, final
+     * @param contractNumber           non-null, non-empty, unique inside Insurance Company, final
      * @param insurer                  non-null, final
      * @param policyHolder             non-null, final
      * @param contractPaymentData      final,
@@ -35,13 +40,10 @@ public abstract class AbstractContract{
         //validation
         validateAbstractContractParams(contractNumber, insurer, policyHolder);
         validateCoverageAmount(coverageAmount);
+        validateUniqueContractNumber(insurer, contractNumber);
 
         //assignment
         this.contractNumber = contractNumber;
-        //unique contract number validation
-        if(insurer.getContracts().contains(this)){
-            throw new IllegalArgumentException("Contract Number must be unique inside one insurer.");
-        }
         this.insurer = insurer;
         this.policyHolder = policyHolder;
         this.contractPaymentData = contractPaymentData;
@@ -49,7 +51,7 @@ public abstract class AbstractContract{
         this.isActive = true; //indicates that the policy is live. //Attribute is set to true when the contract is created
     }
 
-    //methods
+    //___________Public methods___________
     public String getContractNumber() {
         return contractNumber;
     }
@@ -64,6 +66,10 @@ public abstract class AbstractContract{
 
     public int getCoverageAmount(){
         return coverageAmount;
+    }
+
+    public ContractPaymentData getContractPaymentData(){
+        return contractPaymentData;
     }
 
     public boolean isActive(){
@@ -83,19 +89,23 @@ public abstract class AbstractContract{
         this.coverageAmount = coverageAmount;
     }
 
-    public ContractPaymentData getContractPaymentData(){
-        return contractPaymentData;
-    }
-
+    /**
+     * Delegate to company’s payment handler.
+     * @param amount must be > 0
+     */
     public void pay(int amount){
         insurer.getHandler().pay(this, amount);
     }
 
+    /**
+     * Delegate to company’s chargePremiumsOnContracts logic.
+     */
     public void updateBalance(){
         insurer.chargePremiumOnContract(this);
     }
 
-    //private helper validation method for best practice code
+
+    //___________Private helpers___________ validation method for best practice code
     /**
      * @throws IllegalArgumentException if core constructor params are invalid
      */
@@ -122,10 +132,25 @@ public abstract class AbstractContract{
         }
     }
 
+    private static void validateUniqueContractNumber(InsuranceCompany insurer, String contractNumber) {
+        boolean duplicate = insurer.getContracts().stream()
+                .anyMatch(c -> c.getContractNumber().equals(contractNumber));
+        if (duplicate) {
+            throw new IllegalArgumentException("Contract number '" + contractNumber + "' already exists for this insurer");
+        }
+    }
+
+    //___________Override methods___________
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        AbstractContract contract = (AbstractContract) o;
-        return this.getContractNumber().equals(contract.getContractNumber());
+        if (this == o) return true;
+        if (!(o instanceof AbstractContract)) return false;
+        AbstractContract other = (AbstractContract) o;
+        return contractNumber.equals(other.contractNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return contractNumber.hashCode();
     }
 }

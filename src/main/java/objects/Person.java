@@ -32,24 +32,7 @@ public class Person {
         this.contracts = new LinkedHashSet<>();
     }
 
-    //additional validation helper methods
-    private void validatePersonId(String id){
-        if (id == null || id.isEmpty()) {
-            throw new IllegalArgumentException("ID of a person cannot be null or empty");
-        }
-    }
-
-    //Check if date is valid historical date
-    private static boolean isValidDate(int year, int month, int day) {
-        try {
-            LocalDate date = LocalDate.of(year, month, day);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    //methods
+    //___________Public methods___________
     public static boolean isValidBirthNumber(String birthNumber){
         //not null
         if (birthNumber == null) {
@@ -156,5 +139,22 @@ public class Person {
             throw new IllegalArgumentException("Paid out amount must be positive");
         }
         this.paidOutAmount += paidOutAmount;
+    }
+
+    //___________Private helpers___________
+    private void validatePersonId(String id){
+        if (id == null || id.isEmpty()) {
+            throw new IllegalArgumentException("ID of a person cannot be null or empty");
+        }
+    }
+
+    //Check if date is valid historical date
+    private static boolean isValidDate(int year, int month, int day) {
+        try {
+            LocalDate date = LocalDate.of(year, month, day);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

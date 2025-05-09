@@ -31,7 +31,29 @@ public class MasterVehicleContract extends AbstractVehicleContract{
         this.childContracts = new LinkedHashSet<>();  //using linked hash set to preserve insertion order
     }
 
-    //override methods
+
+    //___________Public methods___________
+    public Set<SingleVehicleContract> getChildContracts() {
+        return childContracts;
+    }
+
+    public void requestAdditionOfChildContract(SingleVehicleContract contract) {
+        insurer.moveSingleVehicleContractToMasterVehicleContract(this, contract);
+    }
+
+
+    //___________Private helpers___________
+    /**
+     * @throws IllegalArgumentException if the policyHolder is not a legal entity
+     */
+    private void validatePolicyHolder(Person policyHolder) {
+        if (policyHolder.getLegalForm() != LegalForm.LEGAL) {
+            throw new IllegalArgumentException("The policyholder on the MasterVehicleContract must be a legal entity.");
+        }
+    }
+
+
+    //___________Override methods___________
     @Override
     public boolean isActive() {
         if (childContracts.isEmpty()) {
@@ -62,24 +84,5 @@ public class MasterVehicleContract extends AbstractVehicleContract{
     @Override
     public void updateBalance() {
         insurer.chargePremiumOnContract(this);
-    }
-
-    //methods
-    public Set<SingleVehicleContract> getChildContracts() {
-        return childContracts;
-    }
-
-    public void requestAdditionOfChildContract(SingleVehicleContract contract) {
-        insurer.moveSingleVehicleContractToMasterVehicleContract(this, contract);
-    }
-
-    //validation helper method
-    /**
-     * @throws IllegalArgumentException if the policyHolder is not a legal entity
-     */
-    private void validatePolicyHolder(Person policyHolder) {
-        if (policyHolder.getLegalForm() != LegalForm.LEGAL) {
-            throw new IllegalArgumentException("The policyholder on the MasterVehicleContract must be a legal entity.");
-        }
     }
 }
