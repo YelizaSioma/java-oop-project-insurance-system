@@ -5,12 +5,17 @@ public class Vehicle {
     private final String licensePlate; //EČV
     private final int originalValue; //cena
 
+    /**
+     * @param licensePlate non-null, exactly 7 chars A–Z or 0–9
+     * @param originalValue positive integer
+     * @throws IllegalArgumentException if any precondition fails
+     */
     //constructor
     public Vehicle(String licensePlate, int originalValue){
         //validation
         validateVehicleParams(licensePlate, originalValue);
 
-    //initialization
+        //initialization
         this.licensePlate=licensePlate;
         this.originalValue=originalValue;
     }

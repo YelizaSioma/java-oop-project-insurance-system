@@ -6,11 +6,18 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 public class ContractPaymentData {
-    int premium;
-    PremiumPaymentFrequency premiumPaymentFrequency;
-    LocalDateTime nextPaymentTime;
-    int outstandingBalance;
+    private int premium;
+    private PremiumPaymentFrequency premiumPaymentFrequency;
+    private LocalDateTime nextPaymentTime;
+    private int outstandingBalance;
 
+    /**
+     * @param premium must be > 0
+     * @param premiumPaymentFrequency non-null
+     * @param nextPaymentTime non-null
+     * @param outstandingBalance initial balance (can be negative)
+     * @throws IllegalArgumentException if any precondition fails
+     */
     //constructor
     public ContractPaymentData(int premium, PremiumPaymentFrequency premiumPaymentFrequency, LocalDateTime nextPaymentTime, int outstandingBalance){
         //validation
@@ -60,22 +67,7 @@ public class ContractPaymentData {
     }
 
     public void updateNextPaymentTime(){
-        switch(this.premiumPaymentFrequency.getValueInMonths()) {
-            case 12:
-                this.nextPaymentTime = this.nextPaymentTime.plusMonths(12);
-                break;
-            case 6:
-                this.nextPaymentTime = this.nextPaymentTime.plusMonths(6);
-                break;
-            case 3:
-                this.nextPaymentTime = this.nextPaymentTime.plusMonths(3);
-                break;
-            case 1:
-                this.nextPaymentTime = this.nextPaymentTime.plusMonths(1);
-                break;
-            default:
-                break;
-        }
+        nextPaymentTime = nextPaymentTime.plusMonths(premiumPaymentFrequency.getValueInMonths());
     }
 
 

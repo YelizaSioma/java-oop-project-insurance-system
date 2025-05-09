@@ -5,10 +5,11 @@ import objects.Person;
 import payment.ContractPaymentData;
 
 public abstract class AbstractVehicleContract extends AbstractContract {
+    //attributes
     protected Person beneficiary;
 
     /**
-     * @param beneficiary           can be null, if non‐null, must not equal policyHolder
+     * @param beneficiary           can be null; if non‐null, must not equal policyHolder
      * @param policyHolder          cannot be same person as beneficiary
      *
      * @throws IllegalArgumentException - in constructor - if policyHolder equals beneficiary
@@ -28,6 +29,10 @@ public abstract class AbstractVehicleContract extends AbstractContract {
     }
 
     //___________Public methods___________
+    public Person getBeneficiary(){
+        return beneficiary;
+    }
+
     /**
      * @param beneficiary may be null, if non‐null, must not equal the current policyHolder
      * @throws IllegalArgumentException if beneficiary equals policyHolder
@@ -37,16 +42,14 @@ public abstract class AbstractVehicleContract extends AbstractContract {
         this.beneficiary = beneficiary;
     }
 
-    public Person getBeneficiary(){
-        return beneficiary;
-    }
-
 
     //___________Private helpers___________
-    //private helper validation method for best practice code
+    /**
+     * Ensures that beneficiary ≠ policyHolder.
+     */
     private void validateBeneficiary(Person beneficiary){
         if (beneficiary != null && beneficiary.equals(getPolicyHolder())){
-            throw new IllegalArgumentException("Beneficiary cannot be policy holder at the same time.");
+            throw new IllegalArgumentException("Beneficiary cannot be policyholder at the same time.");
         }
     }
 }

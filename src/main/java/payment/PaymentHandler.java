@@ -14,12 +14,14 @@ public class PaymentHandler {
     private final Map<AbstractContract, Set<PaymentInstance>> paymentHistory;
     private final InsuranceCompany insurer;
 
+    /**
+     *
+     * @param insurer   non-null
+     */
     //constructor
     public PaymentHandler(InsuranceCompany insurer){
         //validation
-        if (insurer == null) {
-            throw new IllegalArgumentException("Insurance Company cannot be null.");
-        }
+        validateInsurer(insurer);
 
         this.paymentHistory = new LinkedHashMap<>();
         this.insurer=insurer;
@@ -32,16 +34,8 @@ public class PaymentHandler {
     }
 
     public void pay(MasterVehicleContract contract, int amount){
+
         validateMasterVehicleContractAndAmount(contract,amount);
-        if (!contract.isActive()){
-            throw new InvalidContractException("Contract must be active to make the payment.");
-        }
-        if(this.insurer.getHandler() != contract.getInsurer().getHandler()){
-            throw new InvalidContractException("The handler must be set up to make the payment.");
-        }
-        if(contract.getChildContracts().isEmpty()){
-            throw new InvalidContractException("List of child contract cannot be empty to make the payment.");
-        }
 
         int originalAmount = amount;
 
@@ -95,13 +89,8 @@ public class PaymentHandler {
     }
 
     public void pay(AbstractContract contract, int amount){
+
         validateAbstractContractAndAmount(contract,amount);
-        if (!contract.isActive()){
-            throw new InvalidContractException("Contract must be active to make the payment.");
-        }
-        if(this.insurer.getHandler() != contract.getInsurer().getHandler()){
-            throw new InvalidContractException("Handler differ from the expected one.");
-        }
 
         contract.getContractPaymentData().setOutstandingBalance(contract.getContractPaymentData().getOutstandingBalance()-amount);
 
@@ -114,13 +103,29 @@ public class PaymentHandler {
         }
     }
 
+
     //___________Private helpers___________
+    private void validateInsurer(InsuranceCompany insurer){
+        if (insurer == null) {
+            throw new IllegalArgumentException("Insurance Company cannot be null.");
+        }
+    }
+
     private void validateMasterVehicleContractAndAmount(MasterVehicleContract contract, int amount){
         if (contract == null) {
             throw new IllegalArgumentException("Master Vehicle Contract cannot be null in pay process.");
         }
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount to pay cannot be null in pay process.");
+        }
+        if (!contract.isActive()){
+            throw new InvalidContractException("Contract must be active to make the payment.");
+        }
+        if(this.insurer.getHandler() != contract.getInsurer().getHandler()){
+            throw new InvalidContractException("The handler must be set up to make the payment.");
+        }
+        if(contract.getChildContracts().isEmpty()){
+            throw new InvalidContractException("List of child contract cannot be empty to make the payment.");
         }
     }
 
@@ -130,6 +135,12 @@ public class PaymentHandler {
         }
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount to pay cannot be null in pay process.");
+        }
+        if (!contract.isActive()){
+            throw new InvalidContractException("Contract must be active to make the payment.");
+        }
+        if(this.insurer.getHandler() != contract.getInsurer().getHandler()){
+            throw new InvalidContractException("Handler differ from the expected one.");
         }
     }
 }

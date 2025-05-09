@@ -8,6 +8,10 @@ import payment.ContractPaymentData;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Simple travel insurance: covers a fixed set of natural persons.
+ * The insuredPersons set is never null, never empty, and never changes.
+ */
 public class TravelContract extends AbstractContract {
     //attributes
     private final Set<Person> insuredPersons;
@@ -29,7 +33,6 @@ public class TravelContract extends AbstractContract {
         super(contractNumber, insurer, policyHolder, contractPaymentData, coverageAmount);
 
         //validation
-
         // ensure contractPaymentData is not null and personsToInsure is not null or empty
         validateTravelContractParams(contractPaymentData, personsToInsure);
         // ensure all insured are natural persons

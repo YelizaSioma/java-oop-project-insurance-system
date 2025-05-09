@@ -14,6 +14,10 @@ public class Person {
     private int paidOutAmount;
     private final Set<AbstractContract> contracts;
 
+    /**
+     * @param id        non-null, not empty, final
+     * @throws IllegalArgumentException if id is invalid
+     */
     //constructor
     public Person(String id){
         //validation
@@ -127,6 +131,11 @@ public class Person {
         return contracts;
     }
 
+    /**
+     * Adds a contract to the set of held contracts.
+     * @param contract must not be null
+     * @throws IllegalArgumentException if contract is null
+     */
     public void addContract(AbstractContract contract){
         if (contract == null) {
             throw new IllegalArgumentException("Contract can't be null");
@@ -134,6 +143,11 @@ public class Person {
         contracts.add(contract);
     }
 
+    /**
+     * Records a payout for a claim.
+     * @param paidOutAmount must be positive
+     * @throws IllegalArgumentException if amount ≤ 0
+     */
     public void payout(int paidOutAmount){
         if (paidOutAmount <= 0) {
             throw new IllegalArgumentException("Paid out amount must be positive");
@@ -142,12 +156,16 @@ public class Person {
     }
 
     //___________Private helpers___________
+    /**
+     * Validates that the ID is non-null and non-empty.
+     */
     private void validatePersonId(String id){
         if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("ID of a person cannot be null or empty");
         }
     }
 
+    /** Validates that year-month-day is an existing date. */
     //Check if date is valid historical date
     private static boolean isValidDate(int year, int month, int day) {
         try {

@@ -10,15 +10,15 @@ public class PaymentInstance implements Comparable<PaymentInstance>{
     private final LocalDateTime paymentTime;
     private final int paymentAmount;
 
+    /**
+     * @param paymentTime   must be non-null
+     * @param paymentAmount must be > 0
+     * @throws IllegalArgumentException if validation fails
+     */
     //constructor
     public PaymentInstance(LocalDateTime paymentTime, int paymentAmount){
         //validation
-        if (paymentTime == null) {
-            throw new IllegalArgumentException("Payment time must be set up in the Payment Instance.");
-        }
-        if (paymentAmount <= 0) {
-            throw new IllegalArgumentException("Payment amount must be set up in the Payment Instance.");
-        }
+        validateConstructorParams(paymentTime, paymentAmount);
 
         this.paymentTime=paymentTime;
         this.paymentAmount=paymentAmount;
@@ -35,7 +35,14 @@ public class PaymentInstance implements Comparable<PaymentInstance>{
     }
 
     //___________Private helpers___________
-    //add
+    private static void validateConstructorParams(LocalDateTime paymentTime, int paymentAmount) {
+        if (paymentTime == null) {
+            throw new IllegalArgumentException("Payment time must be set up in the Payment Instance.");
+        }
+        if (paymentAmount <= 0) {
+            throw new IllegalArgumentException("Payment amount must be set up in the Payment Instance.");
+        }
+    }
 
 
     //___________Override methods___________
