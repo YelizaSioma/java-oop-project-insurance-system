@@ -1,5 +1,5 @@
 # Insurance System Assignment
- re 
+
 ## Assignment Overview
 
 Your task is to implement a very simple version of the insurance system for small insurance companies. The UML diagram was provided to guide you in implementing the system.
